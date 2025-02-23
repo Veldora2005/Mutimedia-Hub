@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multimedia Hub</title>
+  <link rel="stylesheet" href="styles.css">
+  <link  rel="icon" type="image/webp" href="Resources/Icons/multimediahub_icon for mobile.webp">
+  <style>
+    .scroll-wrapper {
+     position: relative;
+     width: 100%;
+     overflow: hidden;
+     background-color: rgb(255, 255, 255);
+     padding: 20px 0;
+    }
+
+    .scroll-container {
+     display: flex;
+         overflow-x: auto;
+     scroll-behavior: smooth;
+     white-space: nowrap;
+     gap: 10px;
+     padding: 10px;
+     cursor: grab;
+     height: 300px;
+    }
+
+     /*Hide scrollbar */
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .item {
+      width: 200px;
+      height: auto;
+      background-color: #1e1e1e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      overflow: hidden;
+      user-select: none;
+      position: relative;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 5px;  /* Prevents overlap with the next row */
+    }
+
+    /* .item and .item:hover properties are used here to create the pop out effect */
+    .item {
+      transition: transform 0.2s ease-in-out;
+    }
+    .item:hover {
+      transform: scale(1.05);
+    }
+    
+    .scroll-button {
+      position: absolute;
+      bottom: 0;
+      width: 40px;
+      height: 87%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 10; /* Ensures buttons are above videos */
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+      .thumbnail{
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="Resources/Icons/Black And White Modern Theatre Logo_20250218_220446_0000.png" alt="LOGO" id="image"></div>
+    <div class="search-container">
+      <input type="text" class="search-box" placeholder="Search...">
+      <button class="search-button">
+        <img src="Resources/Icons/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search">
+      </button>
+    </div>
+    <nav class="menu">
+      <div class="dmbutton" >
+        <input type="checkbox" id="darkmode-toggle" onclick="toggleDarkMode()"/>
+        <label for="darkmode-toggle"></label>
+      </div>
+      <ul>
+        <li class="dropdown">
+          <a href="#" class="dropbtn" id="menuButton">
+            <img src="Resources/Icons/menu_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="menu" id="menulogo">
+          </a>
+          <div class="dropdown-content">
+            <a href="main.html">Home</a>
+            <a href="Videos.html">Video</a>
+            <a href="Songs.html">Music</a>
+            <a href="Contact.html">Contact</a>
+            <a href="#" onclick="logout()">Logout</a>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+    <div class="navbar">
+      <button  id="currenttab" onclick="main()">Home</button>
+      <button  onclick="video()">Video</button>
+      <button  onclick="song()">Music</button>
+    </div>
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Anime/[Judas] Kimi no Na Wa. (Your Name.) [BD 2160p 4K UHD][HEVC x265 10bit][Dual-Audio][Multi-Subs].mkv"  muted controls class="video-hover"></video>
+          <!-- <video src="Resources/Videos/Anime/[Judas] Kimi no Na Wa. (Your Name.) [BD 2160p 4K UHD][HEVC x265 10bit][Dual-Audio][Multi-Subs].mkv" poster="Resources/Thumbnails/Video Thumbnail/your-name-poster-final.jpg" muted controls class="video-hover"></video> -->
+            <h3>Your Name</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Movies/Avatar/Avatar-The.Way.of.Water.2022.1080p.10Bit.WEB-DL.Hindi.5.1-English.5.1.HEVC.x265-HDHub4u.Tv.mkv"  muted controls class="video-hover"></video>
+            <h3>Avatar:The Way of Water</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Movies/Mrs_(2024)_Hindi_Movie_1080p_Web-DL.mp4"  muted controls class="video-hover"></video>
+          <h3>Mrs-</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music Part -->
+    <section class="song">
+      <div class="scroll-wrapper">
+        <h2>Music</h2>
+        <button class="scroll-button scroll-left hidden" id="scrollLeft"><span>&#10094;</span></button>
+        <button class="scroll-button scroll-right" id="scrollRight"><span>&#10095;</span></button>
+        <div class="scroll-container" id="scrollContainer">
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Faded.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/alan-walker-faded-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/2.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/2.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Kamaal Hai.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/Kamaal Hai.m4a"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/GLORY.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/glory-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/KORDHELL.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/kordhell-murder-in-my-mind-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/NEON BLADE.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/neon-blade-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/RAPTURE.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/rapture-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/Cataclysm.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/yvetzal-cataclysm-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Iko Dil.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/Iko Dil - PaagalWorld.Com.Se.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Punjabi/Nazare.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Punjabi/Nazare - PaagalWorld.Com.Se.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Punjabi/Pasandida Aurat.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Punjabi/Pasandida Aurat - PaagalWorld.Com.Se.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/METAMORPHOSIS.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/metamorphosis-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/6.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/6.m4a"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/7.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/7.m4a"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/8.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/8.m4a"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/9.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/9.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/10.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/10.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/11.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/11.mp3"></audio>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Movies/Interstellar.2014.1080p.10Bit.iMAX.BluRay.Hindi.ORG.5.1-English.5.1.HEVC.x265-HDHub4u.Tv.mkv"  muted controls class="video-hover"></video>
+          <h3>Interstellar 2014</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Webseries/Panchayat.S01.1080p.Hindi.WEB-DL.5.1.ESub.x264-HDHub4u.Tv/Panchayat.S01.1080p.E (7).mkv"  muted controls class="video-hover"></video>
+            <h3>Panchayat S1 E7</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Movies/Annabelle (2014) [1080p]/Annabelle.2014.1080p.BluRay.x264.YIFY.mp4"  muted controls class="video-hover"></video>
+            <h3>Annabelle 2014</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music Part -->
+    <section class="song">
+      <div class="scroll-wrapper">
+        <h2>Music</h2>
+        <button class="scroll-button scroll-left hidden" id="scrollLeft1"><span>&#10094;</span></button>
+        <button class="scroll-button scroll-right" id="scrollRight1"><span>&#10095;</span></button>
+        <div class="scroll-container" id="scrollContainer1">
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Bella Ciao.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/Bella Ciao.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/4.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/4.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/aaj ki raat.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/aaj-ki-raat-stree-2-tamannaah-bhatia-sachin-jigar-madhubanti-divya-amitabh-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/Close Eyes.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/close-eyes-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Garmi.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/garmi-song-street-dancer-3d-varun-d-nora-f-shraddha-k-badshah-neha-k-remo-d-t-series-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Faded.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/alan-walker-faded-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/2.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/2.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Kamaal Hai.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/Kamaal Hai.m4a"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/Cataclysm.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/yvetzal-cataclysm-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Iko Dil.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/Iko Dil - PaagalWorld.Com.Se.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Bonfire.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/Bonfire - PaagalWorld.Com.Se.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Phonk/AURA.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Phonk/aura-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/Godari Gattu.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/godari-gattu-lyrical-sankranthiki-vasthunam-venkatesh-aishwarya-anil-ravipudi-bheems-c-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/1.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/1.m4a"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Popular/New Rules.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/Popular/dua-lipa-new-rules-official-music-video-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/17.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/17.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/English/This Is What You Came For.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/English/calvin-harris-rihanna-this-is-what-you-came-for-official-video-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/English/We Don't Talk Anymore.jpg" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/English/we-don-t-talk-anymore-feat-selena-gomez-official-video-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/English/Wiz Khalifa.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/English/wiz-khalifa-see-you-again-ft-charlie-puth-official-video-furious-7-soundtrack-128-ytshorts.savetube.me.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/15.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/15.mp3"></audio>
+          </div>
+          <div class="item" class="musicContainer">
+            <img src="Resources/Thumbnails/Bgm/16.webp" alt="Song Cover" class="thumbnail">
+            <div class="sound-wave" class="soundWave"></div>
+            <audio class="audio" src="Resources/Music/BGM/16.m4a"></audio>
+          </div>
+      </div>
+      </div>
+    </section>
+
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Webseries/Panchayat.S01.1080p.Hindi.WEB-DL.5.1.ESub.x264-HDHub4u.Tv/Panchayat.S01.1080p.E (1).mkv"  muted controls class="video-hover"></video>
+            <h3>Panchayat S1 E1</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Anime/Deamon Slayer/Deamon Slayer Season 1 Episode (3).mp4"  muted controls class="video-hover"></video>
+            <h3>Deamon Slayer S1 E3</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Webseries/Panchayat.S01.1080p.Hindi.WEB-DL.5.1.ESub.x264-HDHub4u.Tv/Panchayat.S01.1080p.E (6).mkv"  muted controls class="video-hover"></video>
+            <h3>Panchayat S1 E6</h3>
+        </div>
+      </div>
+    </section>
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Movies/Interstellar.2014.1080p.10Bit.iMAX.BluRay.Hindi.ORG.5.1-English.5.1.HEVC.x265-HDHub4u.Tv.mkv"  muted controls class="video-hover"></video>
+          <h3>Interstellar 2014</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Webseries/Panchayat.S01.1080p.Hindi.WEB-DL.5.1.ESub.x264-HDHub4u.Tv/Panchayat.S01.1080p.E (2).mkv"  muted controls class="video-hover"></video>
+          <h3>Panchayat S1 E2</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Anime/Deamon Slayer/Deamon Slayer Season 1 Episode (2).mp4"  muted controls class="video-hover"></video>
+          <h3>Deamon Slayer S1 E2</h3>
+        </div>
+      </div>
+    </section>
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Anime/Deamon Slayer/Deamon Slayer Season 1 Episode (1).mp4"  muted controls class="video-hover"></video>
+            <h3>Deamon Slayer S1 E1</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Anime/Deamon Slayer/Deamon Slayer Season 1 Episode (11).mp4"  muted controls class="video-hover"></video>
+            <h3>Deamon Slayer S1 E11</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Webseries/Panchayat.S01.1080p.Hindi.WEB-DL.5.1.ESub.x264-HDHub4u.Tv/Panchayat.S01.1080p.E (3).mkv"  muted controls class="video-hover"></video>
+          <h3>Panchayat S1 E3</h3>
+        </div>
+      </div>
+    </section>
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Movies/Doctor.Strange.in.the.Multiverse.of.Madness.2022.1080p.WEBRip.x264-RARBG/Doctor.Strange.in.the.Multiverse.of.Madness.2022.1080p.WEBRip.x264-RARBG.mp4"  muted controls class="video-hover"></video>
+            <h3>Doctor Strange in the Multiverse of Madness 2022</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Anime/Deamon Slayer/Deamon Slayer Season 1 Episode (10).mp4"  muted controls class="video-hover"></video>
+           <h3>Deamon Slayer S1 E10</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Movies/Stree.2.Sarkate.Ka.Aatank.2024.1080p.AMZN.WEB-DL.DDP5.1.H.265-REL1VIN.mkv"  muted controls class="video-hover"></video>
+          <h3>Stree-2</h3>
+        </div>
+      </div>
+    </section>
+    <section class="videos">
+      <div class="video-grid">
+        <div class="video">
+          <video src="Resources/Videos/Movies/Interstellar.2014.1080p.10Bit.iMAX.BluRay.Hindi.ORG.5.1-English.5.1.HEVC.x265-HDHub4u.Tv.mkv"  muted controls class="video-hover"></video>
+          <h3>Interstellar 2014</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Movies/Avatar/Avatar.2009.Extended.Edition.1080p.10Bit.WEB-DL.Hindi-English.5.1.HEVC.x265-HDHub4u.Tv.mkv"  muted controls class="video-hover"></video>
+            <h3>Avatar</h3>
+        </div>
+        <div class="video">
+          <video src="Resources/Videos/Movies/Kalki 2898 AD (2024) Hindi 1080p NF WEB-DL  DDP 5.1 x265 HEVC ESub - Archie- In.Memory.Of.Script.KiddieKalki.2898.AD.Hindi.2024.1080p.NF.WEB-DL.DDP5.1.H.265-Archie.mkv"  muted controls class="video-hover"></video>
+          <h3>Kalki 2898 AD</h3>
+        </div>
+        </div>
+      </div>
+    </section>
+    <script>
+
+      // To enable logout functionality 
+      document.addEventListener("DOMContentLoaded", () => {
+          // Check if user is logged in by checking sessionStorage
+          const isLoggedIn = sessionStorage.getItem("loggedIn");
+
+          // Only show alert if the user is not logged in
+          if (!isLoggedIn) {
+              alert("You must log in first!");
+              window.location.href = "login.html"; // Redirect to login page
+          } else {
+              // Hide the logout button if the user is not logged in
+              document.getElementById("logout-btn").style.display = "block";
+          }
+      });
+
+      // Logout function
+      function logout() {
+          sessionStorage.removeItem("loggedIn");
+          alert("You have been logged out!");
+          window.location.href = "index.html"; // Redirect to login page
+      }
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

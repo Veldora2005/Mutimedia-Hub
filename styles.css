@@ -1,0 +1,653 @@
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    padding-top: 150px; /* Adjust according to header + navbar height */
+  }
+header {
+  background-image: url('Resources/Icons/WhatsApp\ Image\ 2025-02-18\ at\ 21.33.39_3f212ca6.jpg'); /*  background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 5px rgba(8, 15, 243, 0.2);
+  background-color: #333;
+  color: white;
+  
+
+  /* for the pop-out effect */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+header:hover {
+  transform: scale(1.02); 
+  box-shadow: 0px 5px 15px rgb(255, 0, 0); /* More prominent shadow effect */
+}  
+
+
+.logo img {
+  width: 100px; /* eye ball it */
+  height: 71px;
+  border-radius: 15px;
+  /* Pop-out effect on logo */
+  transition: transform 0.3s ease-in-out;
+}
+/* Pop-out effect on logo */
+.logo:hover img {
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .logo img {
+    max-width: 100px; /* Adjust the max width for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    max-width: 80px; /* Adjust the max width for even smaller screens */
+  }
+}
+
+
+.navbar {
+  position: fixed;
+  top: 92px; /* Adjust this value based on your header's height */
+  left: 0;
+  width: 100%;
+  background: #fff; /* Adjust background color */
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  padding: 5px 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.navbar button {
+  background-color: white; 
+  color: black; 
+  border: 3px solid #041aaa;
+  padding: 7px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; 
+  transition: background 0.3s ease;
+  /* for Pop-out effect  */
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar button:hover {
+  box-shadow: 0 0 10px rgb(255, 0, 0), 0 0 40px rgb(255, 0, 0), 0 0 80px rgb(255, 0, 0);
+  background: black;
+  color: #0f0;
+  background-color: #041aaa; 
+  color: white; 
+  border: none;
+  padding: 7px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;   
+  transition: background 0.3s ease;
+  /* for Pop-out effect  */
+  transform: scale(1.2);
+}
+
+#currenttab {
+  background-color: white; 
+  color: black; 
+  border: 3px solid black;
+  padding: 7px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; 
+  transition: background 0.3s ease;
+  /* for Pop-out effect  */
+  transition: transform 0.3s ease-in-out;
+
+}
+
+#currenttab:hover {
+  background-color: black;
+  color: white; 
+  border: 3px solid black;
+  padding: 7px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px; 
+  transition: background 0.3s ease;
+  /* for Pop-out effect  */
+  transform: scale(1.2);
+} 
+
+
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #000;
+  border-radius: 25px;
+  padding: 5px 10px;
+  width: 450px;
+  transition: transform 0.3s ease-in-out;
+}
+
+ /* for pop out effect */
+.search-container:hover{
+  transform: scale(1.1);
+}
+
+.search-box {
+  flex: 1;
+  border: none;
+  background: none;
+  color: #ccc;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-box::placeholder {
+  color: #888;
+}
+
+.search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search-button img {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+
+
+
+
+.dmbutton {
+  max-width: 78px; /* Limit width */
+  max-height: 30px; /* Adjust based on header height */
+  display: flex;
+  justify-content: center;
+  margin: 0 auto; /* Centers it inside header */
+  transition: transform 0.3s ease-in-out;
+}
+/* for pop out effect */
+.dmbutton:hover{
+  transform: scale(1.1);
+}
+
+label{
+  /* eye ball it  */
+  width: 70px;
+  height: 30px;
+  position: relative;
+  display: block;
+  background: #ebebeb;
+  border-radius: 200px;
+  box-shadow: inset 0px 5px 15px rgba(0,0,0,0,4), inset 0px -5px 15px rgba(255,255,255,0.4);
+  cursor: pointer;
+  transition: 0.3s;
+}
+label:after{
+  content: "";
+  /* eye ball it  */
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  left: 6px;
+  background: linear-gradient(180deg,#ffcc89,#d8860b,#ebcc04);
+  border-radius: 180px;
+  box-shadow: 0px 5px 10px rgba(0,0,0,0,0.2);
+  transition: 0.3s;
+}
+input{
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+input:checked + label{
+  background: #242424;
+}
+input:checked + label:after{
+    left: 64px; /* Adjust based on reduced width */ 
+  /* should be 10units less the the width */
+  transform: translateX(-100%);
+  background: linear-gradient(160deg,#777,#3a3a3a,#242424);
+}
+label:hover:after{
+  width: 30px;
+  /* increase its value to determine the looks on hover */
+}  
+
+@media screen and (max-width: 768px) {
+  
+  .menu {
+    flex-direction: row;
+  }
+
+  .menu ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dmbutton {
+    max-width: 100%; /* Limit width */
+    max-height: 100%; /* Adjust based on header height */
+    display: flex;
+    /* overflow: hidden; */
+    justify-content: center;
+    margin: 0 auto; /* Centers it inside header */
+    transition: transform 0.3s ease-in-out;
+  }
+  /* for pop out effect */
+  .dmbutton:hover{
+    transform: scale(1.1);
+  }
+  
+  label{
+    /* eye ball it  */
+    width: 45px;
+    height: 20px;
+    position: relative;
+    display: block;
+    background: #ebebeb;
+    border-radius: 200px;
+    box-shadow: inset 0px 5px 15px rgba(0,0,0,0,4), inset 0px -5px 15px rgba(255,255,255,0.4);
+    cursor: pointer;
+  }
+  label:after{
+    content: "";
+    /* eye ball it  */
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    top: 13%;
+    left: 6px;
+    background: linear-gradient(180deg,#ffcc89,#d8860b,#ebcc04);
+    border-radius: 180px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0,0.2);
+    transition: 0.3s;
+  }
+  input{
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
+  
+  input:checked + label{
+    background: #242424;
+  }
+  input:checked + label:after{
+      left: 39px; /* Adjust based on reduced width */ 
+    /* should be 10units less the the width */
+    transform: translateX(-100%);
+    background: linear-gradient(160deg,#777,#3a3a3a,#242424);
+  }
+  label:hover:after{
+    width: 15px;
+  }
+}
+
+#menulogo{
+  max-width: 50px;
+}
+
+.menu{
+  display: flex;
+  align-items: center;
+  justify-self: flex-end;
+  gap: 10px;
+
+}
+.menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding-right: 30px;
+  display: flex;
+  padding-left: 0; 
+}
+
+.menu ul li {
+  position: relative;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 15px;
+  display: block;
+}
+
+.menu ul li:hover .dropdown-content {
+  display: block;
+}
+
+
+  /* Default menu icon */
+#menuButton img {
+  content: url('Resources/Icons/menu_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png');
+  transition: content 0.3s ease-in-out;
+}
+
+/* Change to close icon when hovering over the dropdown menu */
+.dropdown:hover #menuButton img,
+.dropdown-content:hover #menuButton img {
+  content: url('Resources/Icons/close_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png');
+}
+
+
+  
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #575757;
+}
+
+main {
+  padding: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+.navbar{
+    display: flex;
+    text-decoration: none;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+}
+  
+
+.videos{
+  display: flex;
+}
+
+.video-grid {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.video{
+  background-color: #000000;
+  text-align: center;
+  border-radius: 5%;
+  transition: transform 0.2s ease-in-out;
+}
+
+.video:hover{
+  transform: scale(1.05);
+  cursor: pointer;
+  
+}
+
+.video-hover {
+  width: 100%; /* Make sure the video fits within the item */
+  height: 100%;
+  border-radius: 5%; /* Match the .item border-radius */
+}
+
+.video-hover:fullscreen {
+  border-radius: 0;
+}
+
+.video-hover:-moz-full-screen {
+  border-radius: 0;
+} /*this part is only comes into play when the video is playing using a firefox web browser*/
+
+.videos, .song {
+  padding-bottom: 50px;
+}
+
+
+.scroll-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgb(255, 255, 255);
+  padding: 20px 0;
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  gap: 10px;
+  padding: 10px;
+  cursor: grab;
+  height: 400px;
+}
+
+/* Hide scrollbar */
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  min-width: 180px;
+  max-width: 650px;
+  height: 100%;
+  background-color: #1e1e1e;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 5px;  /* Prevents overlap with the next row */
+}
+
+
+
+
+.item h3 {
+  margin-top: 5px; /* Adds space between video and title */
+  padding-bottom: 15px;
+  word-wrap: break-word; /* Ensures long titles don’t overflow */
+  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+/* Scroll Buttons - Fully Transparent by Default */
+.scroll-button {
+  position: absolute;
+  bottom: 0;
+  width: 40px;
+  height: 90%;
+  background: rgba(0, 0, 0, 0);
+  z-index: 10; /* Ensures buttons are above videos */
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Left and Right button positioning */
+.scroll-left {
+  left: 0;
+}
+
+.scroll-right {
+  right: 0;
+}
+
+/* Arrow Icons */
+.scroll-button span {
+  font-size: 36px;
+  color: rgba(255, 255, 255, 0.5);
+  transition: color 0.3s ease-in-out;
+}
+
+/* Hover Effects */
+.scroll-button:hover {
+  background: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 50px rgb(0, 0, 0);
+}
+
+.scroll-button:hover span {
+  color: white;
+}
+
+/* Hidden State */
+.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+  
+/* Default light mode styles */
+body {
+  background-color: white;
+  color: black;
+}
+
+/* Dark mode styles */
+.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+/* Ensure all sections and containers use dark backgrounds */
+/*add the class of the you want not to apply dark mode to */
+.dark-mode *:not(.logo):not(.sound-wave):not(.bar):not(.menu):not(.dmbutton)/*:not(.ripple)*/{
+  background-color: #000000 !important;
+  color: white !important;
+}
+
+/* Handle specific elements like input, buttons */
+.dark-mode input, 
+.dark-mode textarea {
+  background-color: #1e1e1e;
+  color: white;
+  border: 1px solid #333;
+}
+/* changes the border color of the #currenttab button  */
+.dark-mode #currenttab {
+  border-color: rgb(163, 16, 16); 
+}
+
+
+
+.sound-wave {
+  position: absolute;
+  width:90%;
+  left:0;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bar {
+  width: 3px;
+  background: rgba(255, 0, 0, 0.7);
+  animation: pulse 1s infinite ease-in-out;
+  position:absolute;
+  bottom: 10px;
+}
+
+@keyframes pulse {
+  0%, 100% { height: 10%; opacity: 0.5; }
+  50% { height: 50%; opacity: 0.9; }
+}
+
+/* Wave Ripple Effect */
+.ripple {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(255, 0, 0, 0.4);
+  animation: rippleEffect 2s infinite ease-out;
+  opacity: 0;
+}
+
+@keyframes rippleEffect {
+  0% { transform: scale(0.5); opacity: 0.8; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Neon Glow Effect */
+.glow-effect {
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+  animation: neonGlow 1s infinite alternate ease-in-out;
+}
+
+@keyframes neonGlow {
+  0% { box-shadow: 0 0 5px rgba(255, 0, 0, 0.5); }
+  100% { box-shadow: 0 0 30px rgb(255, 0, 0); }
+}
+
+
+
+
+
+
+
+ /* Debugger Helps visualize the problem */
+/* .video, .video-title, .video-hover {
+  border: 2px solid red;
+} */
+
+
+

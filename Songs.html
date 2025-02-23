@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multimedia Hub/Music</title>
+  <link rel="stylesheet" href="styles.css">
+  <link  rel="icon" type="image/webp" href="Resources/Icons/multimediahub_icon for mobile.webp">
+  <style>
+    .navbar1 {
+        position: fixed;
+        top: 142px; /* Adjust this value based on your header's height */
+        left: 0;
+        width: 100%;
+        background: #fff; /* Adjust background color */
+        z-index: 999;
+        display: flex;
+        justify-content: center;
+        padding: 6px 0;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    .navbar1 button {
+      background-color: white; 
+      color: black; 
+      border: 3px solid #041aaa;
+      padding: 5px 20px;
+      font-size: 11px;
+      cursor: pointer;
+      border-radius: 5px; /* Optional: Adds rounded corners */
+      transition: background 0.3s ease;
+      margin-left: 10px;
+      /* for Pop-out effect  */
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .navbar1 button:hover {
+      box-shadow: 0 0 10px rgb(255, 0, 0), 0 0 40px rgb(255, 0, 0), 0 0 80px rgb(255, 0, 0);
+      background: black;
+      color: #0f0;
+      background-color: #041aaa; 
+      color: white; 
+      border: none;
+      padding: 5px 20px;
+      font-size: 11px;
+      cursor: pointer;
+      border-radius: 5px; /* Optional: Adds rounded corners */
+      transition: background 0.3s ease;
+      margin-left: 10px;
+      /* for Pop-out effect  */
+      transform: scale(1.2);
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      padding-top: 168px;
+    }
+
+
+
+    .scroll-wrapper {
+     position: relative;
+     width: 100%;
+     overflow: hidden;
+     background-color: rgb(255, 255, 255);
+     padding: 20px 0;
+    }
+
+    .scroll-container {
+     display: flex;
+         overflow-x: auto;
+     scroll-behavior: smooth;
+     white-space: nowrap;
+     gap: 10px;
+     padding: 10px;
+     cursor: grab;
+     height: 300px;
+    }
+
+     /*Hide scrollbar */
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+    
+    .item {
+      width: 200px;
+      height: auto;
+      background-color: #1e1e1e;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      border-radius: 10px;
+      flex-shrink: 0;
+      overflow: hidden;
+      user-select: none;
+      position: relative;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 5px;  /* Prevents overlap with the next row */
+    }
+
+    /* .item and .item:hover properties are used here to create the pop out effect */
+    .item {
+      transition: transform 0.2s ease-in-out;
+    }
+    .item:hover {
+      transform: scale(1.05);
+    }
+
+    .scroll-button {
+      position: absolute;
+      bottom: 0;
+      width: 40px;
+      height: 85%;
+      background: rgba(0, 0, 0, 0);
+      z-index: 10; /* Ensures buttons are above videos */
+      border: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.3s ease-in-out, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    }
+
+    .thumbnail{
+      height: 100%;
+      width: 100%;
+    }
+    
+
+  </style>
+</head>
+<body>
+    <header>
+      <div class="logo"><img src="Resources/Icons/Black And White Modern Theatre Logo_20250218_220446_0000.png" alt="LOGO" id="image"></div>
+      <div class="search-container">
+        <input type="text" class="search-box" placeholder="Search...">
+        <button class="search-button">
+          <img src="Resources/Icons/search_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="Search">
+        </button>
+      </div>
+      <nav class="menu">
+        <div class="dmbutton" >
+          <input type="checkbox" id="darkmode-toggle" onclick="toggleDarkMode()"/>
+          <label for="darkmode-toggle"></label>
+        </div>
+        <ul>
+          <li class="dropdown">
+            <a href="#" class="dropbtn" id="menuButton">
+              <img src="Resources/Icons/menu_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png" alt="menu" id="menulogo">
+            </a>
+            <div class="dropdown-content">
+              <a href="main.html">Home</a>
+              <a href="Videos.html">Video</a>
+              <a href="Songs.html">Music</a>
+              <a href="Contact.html">Contact</a>
+              <a href="#" onclick="logout()">Logout</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="navbar">
+      <button onclick="main()">Home</button>
+      <button onclick="video()">Video</button>
+      <button id="currenttab" onclick="song()">Music</button>
+    </div>
+    <div class="navbar1">
+      <button  onclick="location.href='#popular'">Popular</button>
+      <button  onclick="location.href='#popular'">English</button>
+      <button  onclick="location.href='#hindi'">Hindi</button>
+      <button  onclick="location.href='#phonk'">Phonk</button>
+      <button  onclick="location.href='#punjabi'">Punjabi</button>
+      <button  onclick="location.href='#bgm'">BGM</button>
+    </div>
+      <div class="successivediv">
+        <div class="scroll-wrapper">
+          <div id="popular"><h3>Popular</h3></div>
+          <button class="scroll-button scroll-left hidden" id="scrollLeft"><span>&#10094;</span></button>
+          <button class="scroll-button scroll-right" id="scrollRight"><span>&#10095;</span></button>
+          <div class="scroll-container" id="scrollContainer">
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Bella Ciao.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/Bella Ciao.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/4.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/4.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/aaj ki raat.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/aaj-ki-raat-stree-2-tamannaah-bhatia-sachin-jigar-madhubanti-divya-amitabh-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Close Eyes.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/close-eyes-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Garmi.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/garmi-song-street-dancer-3d-varun-d-nora-f-shraddha-k-badshah-neha-k-remo-d-t-series-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Faded.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/alan-walker-faded-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/2.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/2.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Kamaal Hai.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/Kamaal Hai.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Cataclysm.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/yvetzal-cataclysm-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Iko Dil.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/Iko Dil - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Bonfire.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/Bonfire - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/AURA.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/aura-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/Godari Gattu.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/godari-gattu-lyrical-sankranthiki-vasthunam-venkatesh-aishwarya-anil-ravipudi-bheems-c-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/1.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/1.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Popular/New Rules.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Popular/dua-lipa-new-rules-official-music-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/17.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/17.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/This Is What You Came For.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/calvin-harris-rihanna-this-is-what-you-came-for-official-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/We Don't Talk Anymore.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/we-don-t-talk-anymore-feat-selena-gomez-official-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Wiz Khalifa.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/wiz-khalifa-see-you-again-ft-charlie-puth-official-video-furious-7-soundtrack-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/15.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/15.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/16.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/16.m4a"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="successivediv">
+        <div class="scroll-wrapper">
+          <div id="english"><h3>English</h3></div>
+          <button class="scroll-button scroll-left hidden" id="scrollLeft1"><span>&#10094;</span></button>
+          <button class="scroll-button scroll-right" id="scrollRight1"><span>&#10095;</span></button>
+          <div class="scroll-container" id="scrollContainer1">
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Astronaut in the Ocean.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/masked-wolf-astronaut-in-the-ocean-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Blinding Lights.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/blinding-lights-official-audio-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Cheap Thrills.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/sia-cheap-thrills-official-lyric-video-ft-sean-paul-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Earned It.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/the-weeknd-earned-it-fifty-shades-of-grey-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Fake A Smile.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/fake-a-smile-official-music-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Girls Like You.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/girls-like-you-ft-cardi-b-official-music-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Love Me Like You Do.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/love-me-like-you-do-official-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Mark Ronson - Uptown Funk.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/mark-ronson-uptown-funk-official-video-ft-bruno-mars-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/New Rules.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/new-rules-official-music-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Perfect.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/perfect-official-music-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/The Hills.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/the-hills-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Bella Ciao.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/Bella Ciao.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Faded.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/faded-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/This Is What You Came For.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/calvin-harris-rihanna-this-is-what-you-came-for-official-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/We Don't Talk Anymore.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/we-don-t-talk-anymore-feat-selena-gomez-official-video-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/English/Wiz Khalifa.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/English/wiz-khalifa-see-you-again-ft-charlie-puth-official-video-furious-7-soundtrack-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="successivediv">
+        <div class="scroll-wrapper">
+          <div id="hindi"><h3>Hindi</h3></div>
+          <button class="scroll-button scroll-left hidden" id="scrollLeft2"><span>&#10094;</span></button>
+          <button class="scroll-button scroll-right" id="scrollRight2"><span>&#10095;</span></button>
+          <div class="scroll-container" id="scrollContainer2">
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/1.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/1.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/2.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/2.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/3.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/3.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/4.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/4.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/5.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/5.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/6.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/6.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/7.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/7.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/8.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/8.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/9.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/9.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/10.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/10.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/11.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/11.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/12.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/12.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/13.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/13.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/14.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/14.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/15.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/15.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/16.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/16.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/17.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/17.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/18.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/18.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/19.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/19.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Hindi/20.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Hindi/20.mp3"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="successivediv">
+        <div class="scroll-wrapper">
+          <div id="phonk"><h3>Phonk</h3></div>
+          <button class="scroll-button scroll-left hidden" id="scrollLeft3"><span>&#10094;</span></button>
+          <button class="scroll-button scroll-right" id="scrollRight3"><span>&#10095;</span></button>
+          <div class="scroll-container" id="scrollContainer3">
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/AURA.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/aura-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Cataclysm.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/yvetzal-cataclysm-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Close Eyes.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/close-eyes-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/CXNTURY CROWD.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/cxntury-crowd-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Demon Drift.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/demon-drift-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Devil Eyes.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/devil-eyes-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/DEVIL NIGHT.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/devil-night-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Disaster.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/kslv-disaster-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/DONT STOP.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/don-t-stop-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/Dynamic.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/kslv-dynamic-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/GLORY.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/glory-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/KORDHELL.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/kordhell-murder-in-my-mind-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/METAMORPHOSIS.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/metamorphosis-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/NEON BLADE.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/neon-blade-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/RAPTURE.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/rapture-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/RAVE.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/dxrk-taku-rave-official-audio-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/WAKE UP!.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/wake-up-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Phonk/WARNING.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Phonk/mc-orsen-warning-128-ytshorts.savetube.me.mp3"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="successivediv">
+        <div class="scroll-wrapper">
+          <div id="punjabi"><h3>Punjabi</h3></div>
+          <button class="scroll-button scroll-left hidden" id="scrollLeft4"><span>&#10094;</span></button>
+          <button class="scroll-button scroll-right" id="scrollRight4"><span>&#10095;</span></button>
+          <div class="scroll-container" id="scrollContainer4">
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Aura Jatt Da.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Aura Jatt Da - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Awalla Arastu.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Awalla Arastu - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Bonfire.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Bonfire - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Iko Dil.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Iko Dil - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Larh Pagg De.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Larh Pagg De - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Machreya.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Machreya - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Nazare.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Nazare - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Pasandida Aurat.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Pasandida Aurat - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Sanwla Rang.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Sanwla Rang - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Punjabi/Thirsty Crow.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/Punjabi/Thirsty Crow - PaagalWorld.Com.Se.mp3"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="successivediv">
+        <div class="scroll-wrapper">
+          <div id="bgm"><h3>BGM</h3></div>
+          <button class="scroll-button scroll-left hidden" id="scrollLeft5"><span>&#10094;</span></button>
+          <button class="scroll-button scroll-right" id="scrollRight5"><span>&#10095;</span></button>
+          <div class="scroll-container" id="scrollContainer5">
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/1.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/1.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/2.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/2.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/17.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/17.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/4.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/4.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/5.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/5.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/6.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/6.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/7.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/7.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/8.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/8.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/9.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/9.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/10.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/10.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/11.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/11.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/12.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/12.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/13.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/13.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/14.jpg" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/14.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/15.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/15.mp3"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/16.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/16.m4a"></audio>
+            </div>
+            <div class="item" class="musicContainer">
+              <img src="Resources/Thumbnails/Bgm/3.webp" alt="Song Cover" class="thumbnail">
+              <div class="sound-wave" class="soundWave"></div>
+              <audio class="audio" src="Resources/Music/BGM/3.mp3"></audio>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        //To enable logout functionality 
+        document.addEventListener("DOMContentLoaded", () => {
+            // Check if user is logged in by checking sessionStorage
+            const isLoggedIn = sessionStorage.getItem("loggedIn");
+  
+            // Only show alert if the user is not logged in
+            if (!isLoggedIn) {
+                alert("You must log in first!");
+                window.location.href = "login.html"; // Redirect to login page
+            } else {
+                // Hide the logout button if the user is not logged in
+                document.getElementById("logout-btn").style.display = "block";
+            }
+        });
+  
+        // Logout function
+        function logout() {
+            sessionStorage.removeItem("loggedIn");
+            alert("You have been logged out!");
+            window.location.href = "index.html"; // Redirect to login page
+        }
+    </script>
+    <script src="script.js"></script>
+  </body>
+  </html>
